@@ -3,6 +3,8 @@ package edu.pitt.cs;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.text.DefaultStyledDocument.ElementSpec;
+
 public class RentACatImpl implements RentACat {
 
 	private ArrayList<Cat> cats = new ArrayList<Cat>();
@@ -19,7 +21,15 @@ public class RentACatImpl implements RentACat {
 
 	public boolean returnCat(int id) {
 		// TODO: Fill in
-		return false;
+		if (getCat(id) != null && getCat(id).getRented()){
+			getCat(id).returnCat();
+			System.out.println("Welcome back, "+getCat(id).getName()+"!");
+			return true;
+		}
+		else{
+			System.out.println(getCat(id).getName() + " is already here!");
+			return false;
+		}
 	}
 
 	/**
@@ -34,7 +44,16 @@ public class RentACatImpl implements RentACat {
 
 	public boolean rentCat(int id) {
 		// TODO: Fill in
-		return false;
+		if (getCat(id) != null && !getCat(id).getRented()) {
+			getCat(id).rentCat();
+			System.out.println(getCat(id).getName() + " has been rented.");
+			return true;
+		}
+		else {	
+			System.out.println("Sorry, " + getCat(id).getName() + " is not here!");
+			return false;
+		}
+		
 	}
 
 	/**
@@ -48,7 +67,14 @@ public class RentACatImpl implements RentACat {
 
 	public boolean renameCat(int id, String name) {
 		// TODO: Fill in
-		return false;
+
+		if (getCat(id) != null) {
+			getCat(id).renameCat(name);
+			return true;
+		}
+		else {	
+			return false;
+		}
 	}
 
 	/**
@@ -63,7 +89,13 @@ public class RentACatImpl implements RentACat {
 
 	public String listCats() {
 		// TODO: Fill in
-		return "WRITE CODE FOR THIS";
+		String catList = "";
+		for (Cat c:cats) {
+			if (!c.getRented()) {
+				catList += c.toString() + "\n";
+			}
+		}
+		return catList;
 	}
 
 	/**
